@@ -115,7 +115,6 @@ public class Board
         Dictionary<NormalItem.eNormalType, int> itemCounts = new Dictionary<NormalItem.eNormalType, int>();
         List<Vector2Int> emptyPositions = new List<Vector2Int>();
 
-        // Tạo danh sách các vị trí trống
         for (int x = 0; x < boardSizeX; x++)
         {
             for (int y = 0; y < boardSizeY; y++)
@@ -126,7 +125,6 @@ public class Board
 
         while (emptyPositions.Count >= 3)
         {
-            // Chọn ngẫu nhiên 3 vị trí từ danh sách
             List<Vector2Int> selectedPositions = new List<Vector2Int>();
             for (int i = 0; i < 3; i++)
             {
@@ -135,10 +133,8 @@ public class Board
                 emptyPositions.RemoveAt(rndIndex);
             }
 
-            // Chọn loại item ngẫu nhiên
             NormalItem.eNormalType selectedType = Utils.GetRandomNormalType();
 
-            // Fill 3 vị trí với cùng một loại item
             foreach (var pos in selectedPositions)
             {
                 Cell cell = m_cells[pos.x, pos.y];
@@ -158,7 +154,6 @@ public class Board
             }
         }
 
-        // Fill các vị trí còn lại nếu có
         foreach (var pos in emptyPositions)
         {
             Cell cell = m_cells[pos.x, pos.y];

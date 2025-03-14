@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIPanelGameOver : MonoBehaviour, IMenu
 {
@@ -21,7 +22,8 @@ public class UIPanelGameOver : MonoBehaviour, IMenu
 
     private void OnClickClose()
     {
-        m_mngr.ShowMainMenu();
+        //m_mngr.ShowMainMenu();
+        SceneManager.LoadScene(0);
     }
 
     public void Hide()

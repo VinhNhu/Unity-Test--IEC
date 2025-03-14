@@ -72,6 +72,7 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         State = eStateGame.MAIN_MENU;
+
     }
 
     // Update is called once per frame
@@ -128,6 +129,8 @@ public class GameManager : Singleton<GameManager>
             m_boardController.Clear();
             Destroy(m_boardController.gameObject);
             m_boardController = null;
+            ListItemPicked.L_Save1.Clear();
+            L_BrickInLevel.Clear();
         }
     }
 
