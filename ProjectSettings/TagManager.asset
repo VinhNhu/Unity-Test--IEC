@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Object
   - 
   - 
   - 
@@ -46,4 +46,10 @@ TagManager:
     locked: 0
   - name: items
     uniqueID: 3146586297
+    locked: 0
+  - name: ui
+    uniqueID: 1367396327
+    locked: 0
+  - name: ItemINui
+    uniqueID: 3993998639
     locked: 0

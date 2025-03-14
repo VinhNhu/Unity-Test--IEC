@@ -29,7 +29,7 @@ public class BoardController : MonoBehaviour
 
     private bool m_hintIsShown;
 
-    private bool m_gameOver;
+    public bool m_gameOver;
 
     public void StartGame(GameManager gameManager, GameSettings gameSettings)
     {
@@ -49,7 +49,7 @@ public class BoardController : MonoBehaviour
     private void Fill()
     {
         m_board.Fill();
-        FindMatchesAndCollapse();
+        //FindMatchesAndCollapse();
     }
 
     private void OnGameStateChange(GameManager.eStateGame state)
@@ -75,7 +75,7 @@ public class BoardController : MonoBehaviour
         if (m_gameOver) return;
         if (IsBusy) return;
 
-        if (!m_hintIsShown)
+        /*if (!m_hintIsShown)
         {
             m_timeAfterFill += Time.deltaTime;
             if (m_timeAfterFill > m_gameSettings.TimeForHint)
@@ -128,7 +128,7 @@ public class BoardController : MonoBehaviour
             {
                 ResetRayCast();
             }
-        }
+        }*/
     }
 
     private void ResetRayCast()
@@ -224,10 +224,10 @@ public class BoardController : MonoBehaviour
             matches[i].ExplodeItem();
         }
 
-        if(matches.Count > m_gameSettings.MatchesMin)
+        /*if(matches.Count > m_gameSettings.MatchesMin)
         {
             m_board.ConvertNormalToBonus(matches, cellEnd);
-        }
+        }*/
 
         StartCoroutine(ShiftDownItemsCoroutine());
     }

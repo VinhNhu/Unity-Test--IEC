@@ -32,11 +32,13 @@ public class UIPanelMain : MonoBehaviour, IMenu
     private void OnClickTimer()
     {
         m_mngr.LoadLevelTimer();
+        GameManager.Instance.L_BrickInLevel = new List<Object>(FindObjectsOfType<Object>());
     }
 
     private void OnClickMoves()
     {
         m_mngr.LoadLevelMoves();
+        GameManager.Instance.L_BrickInLevel = new List<Object>(FindObjectsOfType<Object>());
     }
 
     public void Show()

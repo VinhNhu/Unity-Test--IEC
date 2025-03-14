@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UIPanelGame : MonoBehaviour,IMenu
 {
     public Text LevelConditionView;
+    public GameObject L_View;
 
     [SerializeField] private Button btnPause;
 
@@ -30,6 +31,7 @@ public class UIPanelGame : MonoBehaviour,IMenu
     public void Show()
     {
         this.gameObject.SetActive(true);
+        L_View.SetActive(true);
     }
 
     public void Hide()

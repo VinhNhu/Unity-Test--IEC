@@ -25,6 +25,9 @@ public class Board
 
     private int m_matchMin;
 
+    public List<GameObject> L_CellBottom;
+        public List<Cell> L_Save1;
+
     public Board(Transform transform, GameSettings gameSettings)
     {
         m_root = transform;
@@ -74,39 +77,105 @@ public class Board
 
     internal void Fill()
     {
+        /* for (int x = 0; x < boardSizeX; x++)
+         {
+             for (int y = 0; y < boardSizeY; y++)
+             {
+                 Cell cell = m_cells[x, y];
+                 NormalItem item = new NormalItem();
+
+                 List<NormalItem.eNormalType> types = new List<NormalItem.eNormalType>();
+                 if (cell.NeighbourBottom != null)
+                 {
+                     NormalItem nitem = cell.NeighbourBottom.Item as NormalItem;
+                     if (nitem != null)
+                     {
+                         types.Add(nitem.ItemType);
+                     }
+                 }
+
+                 if (cell.NeighbourLeft != null)
+                 {
+                     NormalItem nitem = cell.NeighbourLeft.Item as NormalItem;
+                     if (nitem != null)
+                     {
+                         types.Add(nitem.ItemType);
+                     }
+                 }
+
+                 item.SetType(Utils.GetRandomNormalTypeExcept(types.ToArray()));
+                 item.SetView();
+                 item.SetViewRoot(m_root);
+
+                 cell.Assign(item);
+                 cell.ApplyItemPosition(false);
+             }
+         }*/
+
+        Dictionary<NormalItem.eNormalType, int> itemCounts = new Dictionary<NormalItem.eNormalType, int>();
+        List<Vector2Int> emptyPositions = new List<Vector2Int>();
+
+        // Tạo danh sách các vị trí trống
         for (int x = 0; x < boardSizeX; x++)
         {
             for (int y = 0; y < boardSizeY; y++)
             {
-                Cell cell = m_cells[x, y];
+                emptyPositions.Add(new Vector2Int(x, y));
+            }
+        }
+
+        while (emptyPositions.Count >= 3)
+        {
+            // Chọn ngẫu nhiên 3 vị trí từ danh sách
+            List<Vector2Int> selectedPositions = new List<Vector2Int>();
+            for (int i = 0; i < 3; i++)
+            {
+                int rndIndex = UnityEngine.Random.Range(0, emptyPositions.Count);
+                selectedPositions.Add(emptyPositions[rndIndex]);
+                emptyPositions.RemoveAt(rndIndex);
+            }
+
+            // Chọn loại item ngẫu nhiên
+            NormalItem.eNormalType selectedType = Utils.GetRandomNormalType();
+
+            // Fill 3 vị trí với cùng một loại item
+            foreach (var pos in selectedPositions)
+            {
+                Cell cell = m_cells[pos.x, pos.y];
                 NormalItem item = new NormalItem();
-
-                List<NormalItem.eNormalType> types = new List<NormalItem.eNormalType>();
-                if (cell.NeighbourBottom != null)
-                {
-                    NormalItem nitem = cell.NeighbourBottom.Item as NormalItem;
-                    if (nitem != null)
-                    {
-                        types.Add(nitem.ItemType);
-                    }
-                }
-
-                if (cell.NeighbourLeft != null)
-                {
-                    NormalItem nitem = cell.NeighbourLeft.Item as NormalItem;
-                    if (nitem != null)
-                    {
-                        types.Add(nitem.ItemType);
-                    }
-                }
-
-                item.SetType(Utils.GetRandomNormalTypeExcept(types.ToArray()));
+                item.SetType(selectedType);
                 item.SetView();
                 item.SetViewRoot(m_root);
 
                 cell.Assign(item);
                 cell.ApplyItemPosition(false);
+
+                if (!itemCounts.ContainsKey(selectedType))
+                {
+                    itemCounts[selectedType] = 0;
+                }
+                itemCounts[selectedType]++;
             }
+        }
+
+        // Fill các vị trí còn lại nếu có
+        foreach (var pos in emptyPositions)
+        {
+            Cell cell = m_cells[pos.x, pos.y];
+            NormalItem item = new NormalItem();
+            NormalItem.eNormalType selectedType = Utils.GetRandomNormalType();
+            item.SetType(selectedType);
+            item.SetView();
+            item.SetViewRoot(m_root);
+
+            cell.Assign(item);
+            cell.ApplyItemPosition(false);
+
+            if (!itemCounts.ContainsKey(selectedType))
+            {
+                itemCounts[selectedType] = 0;
+            }
+            itemCounts[selectedType]++;
         }
     }
 

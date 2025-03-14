@@ -3,10 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pattern;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public event Action<eStateGame> StateChangedAction = delegate { };
+
+    public ListItemPicked ListItemPicked;
+    public List<Object> L_BrickInLevel;
 
     public enum eLevelMode
     {
@@ -21,6 +25,8 @@ public class GameManager : MonoBehaviour
         GAME_STARTED,
         PAUSE,
         GAME_OVER,
+        GAME_LOSE,
+        GAME_WIN
     }
 
     private eStateGame m_state;
@@ -45,7 +51,15 @@ public class GameManager : MonoBehaviour
 
     private LevelCondition m_levelCondition;
 
-    private void Awake()
+    public bool isSort;
+
+    public UIMainManager M_UImanager { get => m_uiMenu;}
+
+    public BoardController M_BoardController { get => m_boardController; }
+
+    public LevelCondition M_LevelCondition { get => m_levelCondition; }
+
+    protected override void Awake()
     {
         State = eStateGame.SETUP;
 
@@ -63,7 +77,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_boardController != null) m_boardController.Update();
+       if (m_boardController != null) m_boardController.Update();
     }
 
 
@@ -136,4 +150,12 @@ public class GameManager : MonoBehaviour
             m_levelCondition = null;
         }
     }
+
+    public void SetLayerRecursively(GameObject obj)
+    {
+        SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
+        spriteRenderer.sortingLayerName = "ItemINui";
+        
+    }
+
 }

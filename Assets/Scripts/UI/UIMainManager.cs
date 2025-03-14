@@ -66,8 +66,11 @@ public class UIMainManager : MonoBehaviour
             case GameManager.eStateGame.PAUSE:
                 ShowMenu<UIPanelPause>();
                 break;
-            case GameManager.eStateGame.GAME_OVER:
+            case GameManager.eStateGame.GAME_LOSE:
                 ShowMenu<UIPanelGameOver>();
+                break;
+            case GameManager.eStateGame.GAME_WIN:
+                ShowMenu<UIPanelGameWin>();
                 break;
         }
     }
@@ -102,6 +105,16 @@ public class UIMainManager : MonoBehaviour
     internal void ShowPauseMenu()
     {
         m_gameManager.SetState(GameManager.eStateGame.PAUSE);
+    }
+
+    public void showMenuWin()
+    {
+        m_gameManager.SetState(GameManager.eStateGame.GAME_WIN);
+    }
+
+    public void showMenuLose()
+    {
+        m_gameManager.SetState(GameManager.eStateGame.GAME_LOSE);
     }
 
     internal void LoadLevelMoves()
